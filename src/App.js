@@ -8,7 +8,7 @@ import {
 import './App.css';
 import IsRtv from './IsRtv';
 import IsVirtual from './IsVirtual';
-// import IsRtvVirtual from './IsRtvVirtual';
+import IsRtvVirtual from './IsRtvVirtual';
 
 class App extends Component {
   constructor(props) {
@@ -28,9 +28,9 @@ class App extends Component {
     // console.log('isVirtualActive', isVirtualActive);
     var andQuery;
     if (isVirtualActive === 'Active') {
-      andQuery = ['nameDropdown', 'Virtual'];
+      andQuery = ['nameDropdown', 'Virtual', 'RtvVirtual'];
     } else {
-      andQuery = ['nameDropdown', 'Rtv', 'Virtual'];
+      andQuery = ['nameDropdown', 'Rtv', 'Virtual', 'RtvVirtual'];
     }
     return (
       <ReactiveBase
@@ -46,6 +46,7 @@ class App extends Component {
             />
             <IsRtv data={'isRTV'} />
             <IsVirtual callback={this.handleIsVirtualChange} />
+            <IsRtvVirtual />
           </div>
 
           <div className='col'>
@@ -66,7 +67,7 @@ class App extends Component {
   }
 
   booksReactiveList(data) {
-    // console.log("data", data)
+    console.log("data", data)
     return (
       <div className='flex book-content' key={data._id}>
         <div className='flex column justify-center' style={{ marginLeft: 20 }}>
