@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import {
   ReactiveBase,
-  MultiDropdownList,
   ReactiveList,
-  SelectedFilters,
+  SelectedFilters
 } from '@appbaseio/reactivesearch';
 import './App.css';
 import IsRtv from './IsRtv';
@@ -14,23 +13,33 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isVirtualActive: false
+      isVirtualActive: 'Not_Active',
+      isRtvActive: 'Not_Active'
     };
     this.handleIsVirtualChange = this.handleIsVirtualChange.bind(this);
+    this.handleIsRtvChange = this.handleIsRtvChange.bind(this);
   }
   handleIsVirtualChange(value) {
     this.setState({
       isVirtualActive: value
     });
   }
+  handleIsRtvChange(value) {
+    this.setState({
+      isRtvActive: value
+    });
+  }
   render() {
-    let { isVirtualActive } = this.state;
-    // console.log('isVirtualActive', isVirtualActive);
+    let { isVirtualActive, isRtvActive } = this.state;
     var andQuery;
-    if (isVirtualActive === 'Active') {
-      andQuery = ['nameDropdown', 'Virtual', 'RtvVirtual'];
+    if (isVirtualActive === 'Active' && isRtvActive === 'Not_Active') {
+      andQuery = ['Virtual'];
+    } else if (isRtvActive === 'Active' && isVirtualActive === 'Not_Active') {
+      andQuery = ['Rtv'];
+    } else if (isRtvActive === 'Active' && isVirtualActive === 'Active') {
+      andQuery = ['RtvVirtual'];
     } else {
-      andQuery = ['nameDropdown', 'Rtv', 'Virtual', 'RtvVirtual'];
+      andQuery = ['Virtual'];
     }
     return (
       <ReactiveBase
@@ -39,13 +48,14 @@ class App extends Component {
       >
         <div className='row'>
           <div className='col'>
-            <MultiDropdownList
-              componentId='nameDropdown'
-              dataField='name.keyword'
-              size={100}
+            <IsVirtual
+              data={'isVirtual'}
+              callback={this.handleIsVirtualChange}
             />
-            <IsRtv data={'isRTV'} />
-            <IsVirtual callback={this.handleIsVirtualChange} />
+            <IsRtv
+              data={'isRTV'}
+              callback={this.handleIsRtvChange}
+            />
             <IsRtvVirtual />
           </div>
 
@@ -67,7 +77,7 @@ class App extends Component {
   }
 
   booksReactiveList(data) {
-    console.log("data", data)
+    // console.log("data", data)
     return (
       <div className='flex book-content' key={data._id}>
         <div className='flex column justify-center' style={{ marginLeft: 20 }}>

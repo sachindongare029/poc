@@ -159,3 +159,15 @@ h2 {
 .toggle {
 	display: flex;
 }
+.include-virtual {
+	display: flex;
+}
+.multi-virtual {
+	display: none;
+}
+.include-rtv {
+	display: flex;
+}
+.rtv-virtual {
+	display: none;
+}
