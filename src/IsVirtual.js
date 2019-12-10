@@ -42,6 +42,7 @@ class IsVirtual extends Component {
           renderListItem={label => (
             <div>{label !== 'NULL' ? label : 'None'}</div>
           )}
+          showFilter={false}
         />
         <ToggleButton
           className='checkSelect'

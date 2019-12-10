@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   ReactiveBase,
   ReactiveList,
-  SelectedFilters
+  SelectedFilters,
+  MultiDropdownList
 } from '@appbaseio/reactivesearch';
 import './App.css';
 import IsRtv from './IsRtv';
@@ -31,15 +32,15 @@ class App extends Component {
   }
   render() {
     let { isVirtualActive, isRtvActive } = this.state;
-    var andQuery;
+    var andQuery = ['Name'];
     if (isVirtualActive === 'Active' && isRtvActive === 'Not_Active') {
-      andQuery = ['Virtual'];
-    } else if (isRtvActive === 'Active' && isVirtualActive === 'Not_Active') {
-      andQuery = ['Rtv'];
+      andQuery.push('Virtual');
+    } else if (isVirtualActive === 'Not_Active' && isRtvActive === 'Active') {
+      andQuery.push('Rtv');
     } else if (isRtvActive === 'Active' && isVirtualActive === 'Active') {
-      andQuery = ['RtvVirtual'];
+      andQuery.push('RtvVirtual');
     } else {
-      andQuery = ['Virtual'];
+      andQuery.push('Virtual');
     }
     return (
       <ReactiveBase
@@ -48,14 +49,18 @@ class App extends Component {
       >
         <div className='row'>
           <div className='col'>
+            <MultiDropdownList
+              className='multi-name'
+              title='Name'
+              componentId='Name'
+              dataField='name.keyword'
+              size={100}
+            />
             <IsVirtual
               data={'isVirtual'}
               callback={this.handleIsVirtualChange}
             />
-            <IsRtv
-              data={'isRTV'}
-              callback={this.handleIsRtvChange}
-            />
+            <IsRtv data={'isRTV'} callback={this.handleIsRtvChange} />
             <IsRtvVirtual />
           </div>
 

@@ -24,6 +24,7 @@ class IsRtvVirtual extends Component {
           renderListItem={label => (
             <div>{label !== 'NULL' ? label : 'None'}</div>
           )}
+          showFilter={false}
         />
       </div>
     );
